@@ -30,8 +30,8 @@ io.on('connect', function(socket) {
   var questionNum = 0; // keep count of question, used for IF condition.
   socket.on('loaded', function(){// we wait until the client has loaded and contacted us that it is ready to go.
 
-  socket.emit('answer',"Hello and Welcome to Hogwarts...I am the all knowing Sorting Hat and I will decide if you are a budding wizard or just another filthy muggle."); //We start with the introduction;
-  setTimeout(timedQuestion, 8000, socket,"Tell me your family name first..."); // Wait a moment and respond with a question.
+  socket.emit('answer',"Hey, Hello I am Tanuj's chat bot."); //We start with the introduction;
+  setTimeout(timedQuestion, 2500, socket,"What is your Name?"); // Wait a moment and respond with a question.
 
 });
   socket.on('message', (data)=>{ // If we get a new message from the client we process it;
@@ -51,46 +51,27 @@ function bot(data,socket,questionNum) {
 
 /// These are the main statments that make up the conversation.
   if (questionNum == 0) {
-  answer= 'Welcome to Hogwarts Dear ' + input;// output response
-  waitTime =5000;
-  question = 'So ' + input + ',which pet do you prefer - Owl or Cat?';			    	// load next question
+  answer= 'Hello ' + input + ' :-)';// output response
+  waitTime =2000;
+  question = 'How old are you?';			    	// load next question
   }
   else if (questionNum == 1) {
-	if(input.toLowerCase() == 'owl'){
-  		answer= "I will gift you Hedwig's cousin but we'll see."// output response
-  		waitTime =5000;
-  		question = "Tell me how many players are there in a Quidditch Team - 7 or 8?";			    	// load next question
+  answer= 'Really ' + input + ' Years old? So that means you where born in: ' + (2018-parseInt(input));// output response
+  waitTime =2000;
+  question = 'Where do you live?';			    	// load next question
   }
-	else if(input.toLowerCase() == 'cat'){
-		answer = "Oh Good Lord! Why do you want a Crookshanks?"
-		waitTime = 5000;
-		question = "Anyway, tell me how many players are there in a Quidditch team - 7 or 8?"
-}
-	//else { answer = 'Try Again.'; waitTime = 2000; questionNum == questionNum - 1 ;}
-}
   else if (questionNum == 2) {
-	if(input == '7'){
-		 answer= "Ah! You've done your homework.";
- 		 waitTime =5000;
- 		 question = 'Choose your Sigil- Lion, Badger, Eagle, Snake';			    	// load next question
+  answer= ' Cool! I have never been to ' + input+'.';
+  waitTime =2000;
+  question = 'Whats your favorite Color?';			    	// load next question
   }
-	else if(input == '8'){
-		answer = "You Filthy Mudblood....Avada Kedavra XD";
-		waitTime = 0
-		question = ''
-		socket.emit('changeBG','red');
-		socket.emit('changeFont','white');
-}
-}
   else if (questionNum == 3) {
-  	if(input.toLowerCase() == 'lion'){answer = 'Gryffindor!';waitTime = 0; question = ''}
-	else if(input.toLowerCase() == 'badger'){answer = 'Hufflepuff!';waitTime = 0; question = ''}
-	else if(input.toLowerCase() == 'eagle'){answer = 'Ravenclaw!';waitTime = 0; question = ''}
-	else if(input.toLowerCase() == 'snake'){answer = 'Slytherin!';waitTime = 0; question = ''}
-	socket.emit('changeFont','white');
-	socket.emit('changeBG','orange');
+  answer= 'Ok, ' + input+' it is.';
+  socket.emit('changeBG',input.toLowerCase());
+  waitTime = 2000;
+  question = 'Can you still read the font?';			    	// load next question
   }
- /* else if (questionNum == 4) {
+  else if (questionNum == 4) {
     if(input.toLowerCase()==='yes'|| input===1){
       answer = 'Perfect!';
       waitTime =2000;
@@ -115,7 +96,7 @@ function bot(data,socket,questionNum) {
     waitTime =0;
     question = '';
   }
-*/
+
 
 /// We take the changed data and distribute it across the required objects.
   socket.emit('answer',answer);
